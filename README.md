@@ -1,6 +1,7 @@
 # url-crypt
 
-This module was written by [Michael J Cole](https://github.com/MichaelJCole/url-crypt) who removed it for I don't know what reason. 
+This module was written by [Michael J Cole](https://github.com/MichaelJCole/url-crypt) who removed it for I don't know what reason.
+It was then updated by [vallettea](vallettea) who has not updated it in over 4 years
 
 ## json -> compressed encrypted url-safe base64 strings.
 
@@ -8,10 +9,10 @@ This module was written by [Michael J Cole](https://github.com/MichaelJCole/url-
 
 Take a javascript object.
 
-  - convert it to json
-  - gzip the json
-  - encrypt the gzip
-  - convert encrypted to url-safe base64 string
+- convert it to json
+- gzip the json
+- encrypt the gzip
+- convert encrypted to url-safe base64 string
 
 and back again.
 
@@ -19,11 +20,11 @@ and back again.
 
 Inspired by [this great article](https://neosmart.net/blog/2015/using-hmac-signatures-to-avoid-database-writes/)
 
-You can send someone encrypted data.  If they don't have the key, they can't tamper with it.
+You can send someone encrypted data. If they don't have the key, they can't tamper with it.
 
 When they give it back you can decrypt it.
 
-Skip the database for email verification.  See example server below.
+Skip the database for email verification. See example server below.
 
 ## Use
 
@@ -52,26 +53,24 @@ var backAgain = urlCrypt.decryptObj(base64);
 // expect(backAgain).to.eql(data);
 ```
 
-
 ## Caveats
 
-  - URL's should be < 2000 characters.  Keep it simple.
-  - This library uses Node.js v0.12.0 for the sync zlib functions.  Patches welcome to make it work with older versions.
-
+- URL's should be < 2000 characters. Keep it simple.
+- This library uses Node.js v0.12.0 for the sync zlib functions. Patches welcome to make it work with older versions.
 
 ## Example: database-less email verification.
 
-It's not necessary to store email verification data in the database.  The verification link is information you gave the user through their email.  
+It's not necessary to store email verification data in the database. The verification link is information you gave the user through their email.
 
 You only need to verify the information is untampered with, and not faked.
 
-You can do this by encrypting information into the verification link.  `url-crypt` is a Node.js package that facilitates this.
+You can do this by encrypting information into the verification link. `url-crypt` is a Node.js package that facilitates this.
 
 Below is a database-less email verification server.
 
-  1. Paste the code below into example.js
-  2. `npm install express url-crypt`
-  3. `node example.js`
+1. Paste the code below into example.js
+2. `npm install express url-crypt`
+3. `node example.js`
 
 ```
 'use strict';
@@ -79,7 +78,7 @@ Below is a database-less email verification server.
 /**
  * A simple database less email verificaiton server
  *
- *   node example.js 
+ *   node example.js
  */
 
 var port = 9876;
@@ -91,7 +90,7 @@ var app = express();
 var urlCrypt = require('url-crypt')('~{ry*I)44==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
 var router = require('express').Router();
 
-/** 
+/**
  * Send email verification link
  */
 router.get('/emailLink/:email', function(req, res, next) {
@@ -128,7 +127,7 @@ router.get('/emailLink/:email', function(req, res, next) {
     return res.send('Email sent!');
   });
   */
- 
+
   // Or just print to console.
   console.log('');
   console.log('*** /register/emailLink/:email ********************************************');
@@ -136,7 +135,7 @@ router.get('/emailLink/:email', function(req, res, next) {
   return res.send('Link printed!  Click it!');
 });
 
-/** 
+/**
  * Given a link, validate it
  */
 router.get('/checkLink/:base64', function(req, res) {
@@ -146,7 +145,7 @@ router.get('/checkLink/:base64', function(req, res) {
   try {
     payload =  urlCrypt.decryptObj(req.params.base64);
   } catch(e) {
-    // The link was mangled or tampered with.  
+    // The link was mangled or tampered with.
     return res.status(400).send('Bad request.  Please check the link.');
   }
 
@@ -164,7 +163,7 @@ router.get('/checkLink/:base64', function(req, res) {
 });
 
 app.use('/register', router);
-app.listen(port); 
+app.listen(port);
 console.log('Emailification at http://localhost:' + port);
 console.log('');
 console.log('Try http://localhost:' + port + '/register/emailLink/email@example.com');
