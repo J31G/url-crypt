@@ -1,6 +1,7 @@
 # url-crypt
 
 This module was written by [Michael J Cole](https://github.com/MichaelJCole/url-crypt) who removed it for I don't know what reason.
+
 It was then updated by [vallettea](vallettea) who has not updated it in over 4 years
 
 ## json -> compressed encrypted url-safe base64 strings.
@@ -35,7 +36,7 @@ npm install url-crypt
 then:
 
 ```
-var urlCrypt = require('url-crypt')('~{ry*I)==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
+var urlCrypt = require('url-crypt')('$xrRB9H6NMA3PpQGtfbnrqP$H@H$Xr?A');
 
 // Get some data
 var data = { hello: 'world', this: 'is a test', of: 'url-crypt' };
@@ -87,7 +88,7 @@ var express = require('express');
 var app = express();
 
 // Initialize with a 43 char base64 password.  Google 'password generator'
-var urlCrypt = require('url-crypt')('~{ry*I)44==yU/]9<7DPk!Hj"R#:-/Z7(hTBnlRS=4CXF');
+var urlCrypt = require('url-crypt')('$xrRB9H6NMA3PpQGtfbnrqP$H@H$Xr?A');
 var router = require('express').Router();
 
 /**
